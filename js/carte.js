@@ -115,37 +115,6 @@ function ajout(pseudo,score){
 // **********************************************************************************************************************
 //                                     Marqueurs et variables utilisées dans le script
 // **********************************************************************************************************************
-// //Marqueur Ulysse //
-
-
-// var ulysse1 = L.icon({
-//     iconUrl: '../media/ulysse1.png',
-
-//     //maxZoom:3,
-//     //minZoom:3,
-//     iconSize:     [38, 95], // size of the icon
-//     iconAnchor:   [20,80], // point of the icon which will correspond to marker's location
-//     popupAnchor:  [0,0] // point from which the popup should open relative to the iconAnchor
-// });
-
-
-// var m1=L.marker([46.369, 6.484],{
-//   //Ithaque [38.43669584249502, 20.69224703845046]
-//   // Test [48.859127511352376, 2.6056194620203175]
-// 	// Thonon [46.369, 6.484]
-//   icon: ulysse1,
-//   draggable:'true'
-// });
-
-
-// m1.addTo(cartodyssee);
-// m1.bindPopup("Salut je m'appelle Ulysse");
-// m1.openPopup();
-
-// Rectangle oléron(envisager une autre table ??? à voir ???) //
-// coordonnées à améliorer
-
-
 
 
 //************************************************************************************************
@@ -407,9 +376,8 @@ function f(objet){
             }
   
             else if(fonctionnalite=='cliquerinventaire'){
-              //glisser(objet);
-              //inventaire[n].getPopup().setContent(kangoo);
-              cliquer_inventaire();
+              
+              cliquer_inventaire(inventaire[n]);
               inventaire[n].on('click',e=>{console.log('titi');
                 try{cliquer_inventaire();}
                 catch{console.log('pas def')}
@@ -432,19 +400,25 @@ function f(objet){
       }
       
       else if (nb_click==1){
-        console.log("nuuuul")
+        console.log("Aller chercher l'objet suivant.")
         
       }
     }
   });
 }
 
-function cliquer_inventaire(){
+function cliquer_inventaire(objet){
   var malika_uml=document.getElementById("objet4");
+  n_click=0;
   malika_uml.addEventListener('click',e=>{
-    document.getElementById("popup_content").innerHTML+="<br>Ton diagramme UML est magnifique <br><img  src='../media/uml.png' height=10% width=10%> <br> Avant de rentrer, passe donc faire la fête avec Emmanuel sur l'île de Kithira."
-    temporaire.addTo(cartodyssee);
-    controle_zoom(temporaire);
+    n_click+=1;
+    if (n_click==1){
+      document.getElementById("popup_content").innerHTML+="<br>Ton diagramme UML est magnifique <br><img  src='../media/uml.png' height=10% width=10%> <br> Avant de rentrer, passe donc faire la fête avec Emmanuel sur l'île de Kithira."
+      temporaire.addTo(cartodyssee);
+      controle_zoom(temporaire);
+      objet.openPopup();
+    }
+    
   });
 }
 
