@@ -110,6 +110,15 @@ function ajout(pseudo,score){
     });
 }
 
+function remplace(string){
+  try{
+    string=string.replace('$pseudo$',pseudo);
+  }
+  catch{
+    console.log("pas de pseudo dans la chaîne de caractère")
+  }
+  return string;
+}
 
 
 // **********************************************************************************************************************
@@ -208,6 +217,11 @@ fetch('../php/objet.php')
       bouton_commencer.onclick = function() {
         ulysse.remove(cartodyssee);  
       };
+      ulysse.on('click',e=>{
+        bouton_commencer.onclick = function() {
+          ulysse.remove(cartodyssee);  
+        };
+      });
       //Sécurité du début(si l'utilisateur a cliqué ailleurs que sur le bouton)
       //Au bout de 15 secondes Ulysse disparaît
       setTimeout(function(){
@@ -279,6 +293,9 @@ function f(objet){
       width=100;
       progression(width);
 
+      var chaine=remplace(document.getElementById('popup_content').innerHTML);
+      document.getElementById('popup_content').innerHTML=chaine;
+      console.log(chaine);
       console.log("victoire");
       console.log(indice);
       
@@ -409,14 +426,15 @@ function f(objet){
 
 function cliquer_inventaire(objet){
   var malika_uml=document.getElementById("objet4");
+  var chaine=remplace(document.getElementById('popup_content').innerHTML);
+  document.getElementById('popup_content').innerHTML=chaine;
   n_click=0;
   malika_uml.addEventListener('click',e=>{
     n_click+=1;
     if (n_click==1){
-      document.getElementById("popup_content").innerHTML+="<br>Ton diagramme UML est magnifique <br><img  src='../media/uml.png' height=10% width=10%> <br> Avant de rentrer, passe donc faire la fête avec Emmanuel sur l'île de Kithira."
+      document.getElementById("popup_content").innerHTML+="<br><br>Ton diagramme UML est magnifique <br><img  src='../media/uml.png' height=10% width=10%> <br> Avant de rentrer, passe donc faire la fête avec Emmanuel sur l'île de Kithira.<br>"
       temporaire.addTo(cartodyssee);
       controle_zoom(temporaire);
-      objet.openPopup();
     }
     
   });
@@ -526,14 +544,13 @@ function glisser(objet){
           var overlay = L.imageOverlay( '../media/bateaumarseille.png', limites, {
             opacity: 1
           });
+
           marseille.remove(cartodyssee);
           overlay.addTo(cartodyssee);
           cartodyssee.fitBounds([[43.307122066033, 5.347865569694506], [43.278884491766064, 5.378960085855232]]);
-
-
+          
           bouton_marseille.onclick=function(){
 
-            
             temporaire.addTo(cartodyssee);
 
             controle_zoom(temporaire);
@@ -541,9 +558,20 @@ function glisser(objet){
             cartodyssee.setView([28.21724408197127, -16.425868488500043],15);
             console.log('succès');
             
-          };
+          }; 
 
-           
+          objet.on('click',e=>{
+            bouton_marseille.onclick=function(){
+
+              temporaire.addTo(cartodyssee);
+  
+              controle_zoom(temporaire);
+              temporaire.openPopup();
+              cartodyssee.setView([28.21724408197127, -16.425868488500043],15);
+              console.log('succès');
+              
+            };
+          }); 
         }
 
         else{
@@ -597,7 +625,7 @@ var sauvegarde4 = indice4.innerHTML;
 
 
 indice1.addEventListener('click',e=>{
-  indice1.innerHTML="<p class='indices'>Attention aux coordonnées</p>";
+  indice1.innerHTML="<p class='indices'>Fallait écouter les cours de Serge</p>";
   setTimeout(function() {
     indice1.innerHTML=sauvegarde1;
   },700);
@@ -618,7 +646,7 @@ indice3.addEventListener('click',e=>{
 });
 
 indice4.addEventListener('click',e=>{
-  indice4.innerHTML="<p class='indices'>Kithira est une île entre la Grèce et la Crète</p>";
+  indice4.innerHTML="<p class='indices'>Cythère est une île entre la Grèce et la Crète</p>";
   setTimeout(function() {
     indice4.innerHTML=sauvegarde4;
   },700);

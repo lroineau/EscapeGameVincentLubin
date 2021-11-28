@@ -121,8 +121,23 @@ body {
   border: 1px solid rgb(0, 0, 0);
   text-shadow: 0 1px 1px rgba(153, 129, 51, 0.8);
   outline:none;
+  margin-left: 25%;
+}
+.bouton_pop:hover,
+.bouton_pop:focus {
+    color: white;
+    background-color: #3060ff;
+    box-shadow: 0 1px 0 rgba(255,255,255,.1),
+                0 0 1px 1px rgba(255,255,255,.3) inset,
+                0 1px rgba(255,255,255,.4) inset,
+                0 0 5px rgba(174,58,235,1);
+    border-color: rgba(255, 255, 255, .2);
 }
 
+.bouton_pop:active {
+    background-color: #246cbf;
+    border: 1px solid black;
+}
 
 #mapid{
   height: 95%;
